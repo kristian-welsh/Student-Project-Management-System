@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h1>Log in</h1>
+        <form action="j_security_check" name="login">
+            Username: <input type="text" name="j_username" size="50"/>
+            Password: <input type="password" name="j_password" size="50"/>
+            <button value="Submit" type="submit">Log in</button>
+        </form>
+        <br/>
+        <h1>Registration</h1>
+        <h:link value="Register as a supervisor" outcome="register-supervisor"/>
+        <h:link value="Register as a student" outcome="register-student"/>
+    </h:body>
+</html>
