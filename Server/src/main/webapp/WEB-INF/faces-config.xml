@@ -17,4 +17,11 @@
             <to-view-id>/register-supervisor.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/home.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>projects-list</from-outcome>
+            <to-view-id>/projects-list.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Projects List</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h1>Projects List</h1>
+        <h:dataTable value="#{projectListBean.fullProjectList}"
+                     var="project">
+            <h:column>
+                <f:facet name="header">Title</f:facet>
+                #{project.title}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Description</f:facet>
+                #{project.description}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Skills Needed</f:facet>
+                #{project.skills}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Acceptance Status</f:facet>
+                #{project.status}
+            </h:column>
+        </h:dataTable>
+    </h:body>
+</html>
