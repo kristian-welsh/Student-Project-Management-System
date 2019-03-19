@@ -8,12 +8,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
+        <h:link value="home" outcome="home"/>
         <h1>Projects List</h1>
         <h:dataTable value="#{projectListBean.fullProjectList}"
                      var="project">
             <h:column>
                 <f:facet name="header">Title</f:facet>
-                #{project.title}
+                <h:form>
+                    <h:commandLink value="#{project.title}" action="#{projectListBean.selectProject(project)}"/>
+                </h:form>
             </h:column>
             <h:column>
                 <f:facet name="header">Description</f:facet>

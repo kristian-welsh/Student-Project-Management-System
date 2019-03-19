@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <head>
+        <title>Project Information</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        Here's the information you requested
+        <br/>
+        Title:
+        <br/>
+        #{projectListBean.selectedProject.title}
+        <br/>
+        Description:
+        <br/>
+        #{projectListBean.selectedProject.description}
+        <br/>
+        Skills:
+        <br/>
+        #{projectListBean.selectedProject.skills}
+        <br/>
+        Status:
+        <br/>
+        #{projectListBean.selectedProject.status}
+        <br/>
+        <h:form>
+            <h:commandLink value="choose this as your project" action="#{projectListBean.confirmSelection()}"/>
+        </h:form>
+    </body>
+</html>

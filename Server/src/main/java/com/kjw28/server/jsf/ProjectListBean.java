@@ -8,6 +8,8 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class ProjectListBean {
+    // rename me to ProjectBean since I'm using this for things other than listing
+    Project selectedProject;
     
     public ProjectListBean() {
         
@@ -17,6 +19,25 @@ public class ProjectListBean {
         // todo: get list from ejb service backed by db
         return createTestList();
     }
+
+    public Project getSelectedProject() {
+        return selectedProject;
+    }
+    
+    public String selectProject(Project project) {
+        selectedProject = project; // save selection across post request
+        return "project-information";
+    }
+    
+    public String confirmSelection() {
+        // todo: change project status and notify supervisor
+        // do this, but on an ejb: selectedProject.setStatus("Proposed");
+        return "selection-successful";
+    }
+    
+    
+    
+    // just for development purposes before database is setup:
     
     private ArrayList<Project> createTestList() {
         ArrayList<Project> list = new ArrayList<>();

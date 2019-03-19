@@ -24,4 +24,22 @@
             <to-view-id>/projects-list.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/projects-list.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>project-information</from-outcome>
+            <to-view-id>/project-information.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/project-information.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>selection-successful</from-outcome>
+            <to-view-id>/selection-successful.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

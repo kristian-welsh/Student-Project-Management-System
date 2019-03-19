@@ -6,7 +6,7 @@ public class Project {
     private String title;
     private String description;
     private ArrayList<String> skills;
-    private String status;
+    private String status = "Available";
 
     public Project() {
     }
