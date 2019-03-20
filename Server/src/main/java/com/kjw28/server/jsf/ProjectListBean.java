@@ -15,8 +15,9 @@ public class ProjectListBean {
         
     }
 
-    public ArrayList<Project> getFullProjectList() {
+    public ArrayList<Project> getAvailableProjectList() {
         // todo: get list from ejb service backed by db
+        // all available projects
         return createTestList();
     }
 
@@ -35,7 +36,26 @@ public class ProjectListBean {
         return "selection-successful";
     }
     
+    public ArrayList<Project> getMyProjectReviewList() {
+        // todo: get list from ejb service backed by db
+        // all awaiting review projects supervised by logged in supervisor
+        return createTestList();
+    }
     
+    public String reviewProject(Project project) {
+        selectedProject = project; // save selection across post request
+        return "review-project";
+    }
+    
+    public String acceptProposal() {
+        // todo: do the thing (through ejb)
+        return "review-selections";
+    }
+    
+    public String rejectProposal() {
+        // todo: do the thing (through ejb)
+        return "review-selections";
+    }
     
     // just for development purposes before database is setup:
     
