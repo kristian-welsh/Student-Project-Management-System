@@ -7,23 +7,19 @@
     </head>
     <body>
         <h:link value="home" outcome="home"/>
-        Here's the information you requested
+        <h2>Here's the information you requested</h2>
         <br/>
-        Title:
+        <h3>Title:</h3>
+        <p>#{projectListBean.selectedProject.title}</p>
         <br/>
-        #{projectListBean.selectedProject.title}
+        <h3>Description:</h3>
+        <p>#{projectListBean.selectedProject.description}</p>
         <br/>
-        Description:
+        <h3>Skills:</h3>
+        <p>#{projectListBean.selectedProject.skills}</p>
         <br/>
-        #{projectListBean.selectedProject.description}
-        <br/>
-        Skills:
-        <br/>
-        #{projectListBean.selectedProject.skills}
-        <br/>
-        Status:
-        <br/>
-        #{projectListBean.selectedProject.status}
+        <h3>Status:</h3>
+        <p>#{projectListBean.selectedProject.status}</p>
         <br/>
         <h:form>
             <h:commandLink value="choose this as your project" action="#{projectListBean.confirmSelection()}"/>
