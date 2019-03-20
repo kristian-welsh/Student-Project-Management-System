@@ -3,6 +3,8 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
+    <!-- register student, register supervisor: login -->
     <navigation-rule>
         <from-view-id>/register-supervisor.xhtml</from-view-id>
         <navigation-case>
@@ -10,13 +12,21 @@
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <!-- login: register student, register supervisor -->
     <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>register-supervisor</from-outcome>
             <to-view-id>/register-supervisor.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>register-student</from-outcome>
+            <to-view-id>/register-student.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
+    
+    <!-- home: various links based on logged in user -->
     <navigation-rule>
         <from-view-id>/home.xhtml</from-view-id>
         <navigation-case>
@@ -28,6 +38,8 @@
             <to-view-id>/review-selections.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <!-- student project list: project info -->
     <navigation-rule>
         <from-view-id>/projects-list.xhtml</from-view-id>
         <navigation-case>
@@ -35,14 +47,21 @@
             <to-view-id>/project-information.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <!-- student project info: select it, return to list -->
     <navigation-rule>
         <from-view-id>/project-information.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>selection-successful</from-outcome>
             <to-view-id>/selection-successful.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>projects-list</from-outcome>
+            <to-view-id>/projects-list.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
-    <!-- you can go home from anywhere -->
+    
+    <!-- Anywhere: home -->
     <navigation-rule>
         <from-view-id>/*.xhtml</from-view-id>
         <navigation-case>
