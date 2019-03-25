@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html">
+    <head>
+        <title>Propose Project</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h:link value="home" outcome="home"/>
+        <h1>Propose Project</h1>
+        <p>Here you can propose a project for students to select</p>
+        <h:form id="proposal_form">
+            <p>Title: </p><h:inputText id="title"
+                         label="titleinput"
+                         required="true"
+                         requiredMessage="Title is required"
+                         title="title"
+                         value="#{proposalBean.title}">
+            </h:inputText>
+            <br/>
+            <h:message for="title"/>
+            <br/>
+            
+            <p>Description: </p><h:inputTextarea id="description"
+                         label="descriptioninput"
+                         required="true"
+                         requiredMessage="Description is required"
+                         title="description"
+                         value="#{proposalBean.description}">
+            </h:inputTextarea>
+            <br/>
+            <h:message for="description"/>
+            <br/>
+            
+            <p>Skills: </p><h:inputText id="skills"
+                         label="skillsinput"
+                         title="skills"
+                         value="#{proposalBean.skills}">
+                <f:converter converterId="listStringConverter"/>
+            </h:inputText>
+            <br/>
+            <h:message for="skills"/>
+            <br/>
+            
+            <p>Topic: </p><h:selectOneMenu id="topic"
+                         label="topicinput"
+                         required="true"
+                         requiredMessage="Topic is required"
+                         title="title"
+                         value="#{proposalBean.topic}">
+                <f:selectItems value="#{proposalBean.topics}"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:message for="topic"/>
+            <br/>
+            
+            <h:commandButton id="submit"
+                             title="submit"
+                             label="submitbutton"
+                             type="submit"
+                             value="Submit"
+                             action="#{proposalBean.submitSupervisorProposal}">
+            </h:commandButton>
+            <h:commandButton id="reset"
+                             title="reset"
+                             label="resetbutton"
+                             type="reset"
+                             value="reset fields">
+            </h:commandButton>
+            <br/>
+            <h3>Input Errors</h3>
+            <h:messages layout="list"/>
+        </h:form>
+    </body>
+</html>

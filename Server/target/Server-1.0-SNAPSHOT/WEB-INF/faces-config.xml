@@ -48,6 +48,14 @@
             <from-outcome>review-selections</from-outcome>
             <to-view-id>/review/list.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>propose-project-student</from-outcome>
+            <to-view-id>/proposal/student.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>propose-project-supervisor</from-outcome>
+            <to-view-id>/proposal/supervisor.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
     <!-- student project list: project info -->
@@ -72,6 +80,24 @@
         </navigation-case>
     </navigation-rule>
     
+    <!-- student proposal: successful confirmation -->
+    <navigation-rule>
+        <from-view-id>/proposal/student.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>proposal-confirmation</from-outcome>
+            <to-view-id>/proposal/successful.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <!-- supervisor proposal: successful confirmation -->
+    <navigation-rule>
+        <from-view-id>/proposal/supervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>proposal-confirmation</from-outcome>
+            <to-view-id>/proposal/successful.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
     <!-- supervisor review list: info -->
     <navigation-rule>
         <from-view-id>/review/list.xhtml</from-view-id>
@@ -91,13 +117,6 @@
     </navigation-rule>
     
     <!-- Anywhere: home -->
-    <navigation-rule>
-        <from-view-id>/*.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>home</from-outcome>
-            <to-view-id>/home.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
     <navigation-rule>
         <from-view-id>/*</from-view-id>
         <navigation-case>

@@ -36,7 +36,7 @@ public class RegisterBean {
         return "login";
     }
 
-    //<editor-fold defaultstate="collapsed" desc="getters & setters">    
+    //<editor-fold defaultstate="collapsed" desc="getters & setters">
     public String getName() {
         return name;
     }
