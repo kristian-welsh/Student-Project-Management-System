@@ -9,7 +9,8 @@
     </head>
     <body>
         <h:link value="home" outcome="home"/>
-        <h1>Project selections awaiting your review:</h1>
+        <h1>Review list</h1>
+        <p>These project selections are awaiting your review</p>
         <h:dataTable value="#{projectListBean.myProjectReviewList}"
                      var="project">
             <h:column>
@@ -25,10 +26,6 @@
             <h:column>
                 <f:facet name="header">Skills Needed</f:facet>
                 #{project.skills}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Acceptance Status</f:facet>
-                #{project.status}
             </h:column>
         </h:dataTable>
     </body>

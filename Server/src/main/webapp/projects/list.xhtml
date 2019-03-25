@@ -10,6 +10,7 @@
     <h:body>
         <h:link value="home" outcome="home"/>
         <h1>Projects List</h1>
+        <p>These projects are available for you to select for your final year (subject to approval)</p>
         <h:dataTable value="#{projectListBean.availableProjectList}"
                      var="project">
             <h:column>
@@ -25,10 +26,6 @@
             <h:column>
                 <f:facet name="header">Skills Needed</f:facet>
                 #{project.skills}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Acceptance Status</f:facet>
-                #{project.status}
             </h:column>
         </h:dataTable>
     </h:body>
