@@ -1,6 +1,7 @@
 package com.kjw28.server.jsf;
 
 import com.kjw28.server.entity.Project;
+import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -68,6 +69,7 @@ public class ProjectListBean {
     private Project createTestProject() {
         ArrayList<String> skills = new ArrayList<>();
         skills.add("test skill");
-        return new Project("test title", "test description", skills, "test status");
+        Supervisor supervisor = new Supervisor("Paul", "Newbury", "Informatics", "paul.newbury@sussex.ac.uk", "055501234", "password");
+        return new Project("test title", "test description", skills, "test status", supervisor);
     }
 }

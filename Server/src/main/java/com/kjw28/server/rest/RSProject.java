@@ -1,8 +1,10 @@
 package com.kjw28.server.rest;
 
 import com.kjw28.server.entity.Project;
+import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,11 +18,13 @@ import javax.ws.rs.core.Response;
 public class RSProject {
     HashMap<Integer, Project> projects;
     
-    public RSProject() {
+    @PostConstruct
+    public void populateTestData() {
+        Supervisor supervisor = new Supervisor("Paul", "Newbury", "Informatics", "paul.newbury@sussex.ac.uk", "055501234", "password");
         ArrayList<String> skills = new ArrayList<>();
         skills.add("skill-1");
         skills.add("skill-2");
-        Project project = new Project("title", "description", skills, "Proposed");
+        Project project = new Project("title", "description", skills, "Proposed", supervisor);
         projects = new HashMap<>();
         projects.put(1, project);
     }

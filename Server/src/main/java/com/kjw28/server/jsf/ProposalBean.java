@@ -1,8 +1,13 @@
 package com.kjw28.server.jsf;
 
 import com.kjw28.server.ejb.ProjectStorageService;
+import com.kjw28.server.ejb.SupervisorStorageService;
+import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -17,11 +22,23 @@ public class ProposalBean {
     private String supervisor;
     private String status;
     
+    // I can't use <String, Supervisor> because then i would have problems with transaction scopes.
+    private HashMap<String, Long> supervisorIds;
+    
     @EJB
     ProjectStorageService projectStore;
+    @EJB
+    SupervisorStorageService supervisorStore;
 
     public ProposalBean() {
-        
+        supervisorIds = new HashMap<>();
+    }
+    
+    @PostConstruct
+    public void loadSupervisors() {
+        List<Supervisor> supervisors = supervisorStore.getFullSupervisorList();
+        for (Supervisor s : supervisors)
+            supervisorIds.put(s.getName() + " " + s.getSurname(), s.getId());
     }
 
     public ProposalBean(List<String> skills, String status) {
@@ -33,7 +50,7 @@ public class ProposalBean {
         status = "Proposed";
         // todo: stop submission if student has proposed project that hasn't
         //       been accepted yet (probably re-use current proposed)
-        projectStore.insertProject(title, description, skills, status);
+        projectStore.insertProject(title, description, skills, status, supervisorIds.get(supervisor));
         return "proposal-confirmation";
     }
     
@@ -98,11 +115,11 @@ public class ProposalBean {
         return mockTopics();
     }
     
-    public List<String> getSupervisors() {
-        return mockSupervisors();
-    }
-    
     //</editor-fold>
+    
+    public List<String> getSupervisors() {
+        return new ArrayList<>(supervisorIds.keySet());
+    }
     
     // just for development purposes before database is setup:
     
