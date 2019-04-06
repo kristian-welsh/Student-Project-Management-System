@@ -1,45 +1,44 @@
 package com.kjw28.server.jsf;
 
+import com.kjw28.server.ejb.ProjectStorageService;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 
 @Named
 @RequestScoped
 public class ProposalBean {
-    enum Status {
-        Accepted,
-        Proposed,
-        Available
-    }
-    
     private String title = "";
     private String description = "";
     private List<String> skills = new ArrayList<>();
     private String topic;
     private String supervisor;
-    private Status status;
+    private String status;
+    
+    @EJB
+    ProjectStorageService projectStore;
 
     public ProposalBean() {
         
     }
 
-    public ProposalBean(List<String> skills, Status status) {
+    public ProposalBean(List<String> skills, String status) {
         this.skills = skills;
         this.status = status;
     }
     
     public String submitStudentProposal() {
-        status = Status.Proposed;
+        status = "Proposed";
         // todo: stop submission if student has proposed project that hasn't
         //       been accepted yet (probably re-use current proposed)
-        // todo: persist
+        projectStore.insertProject(title, description, skills, status);
         return "proposal-confirmation";
     }
     
     public String submitSupervisorProposal() {
-        status = Status.Available;
+        status = "Available";
         // todo: grab currently logged in supervisor from context
         // todo: persist
         return "proposal-confirmation";
@@ -87,11 +86,11 @@ public class ProposalBean {
         this.supervisor = supervisor;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
     

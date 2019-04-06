@@ -1,9 +1,9 @@
 package com.kjw28.server.ejb;
 
-import java.util.ArrayList;
+import java.util.List;
 import com.kjw28.server.entity.Project;
 
 public interface ProjectStorageService {
-    ArrayList<Project> getFullProjectList();
-    // todo: insert project
+    List<Project> getFullProjectList();
+    void insertProject(String title, String description, List<String> skills, String status);
 }
