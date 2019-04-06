@@ -1,6 +1,14 @@
 com\kjw28\server\jsf\RegisterBean.class
 com\kjw28\server\jsf\ProposalBean.class
-com\kjw28\server\ejb\ProjectStorageService.class
+com\kjw28\server\jsf\ListStringConverter.class
+org\netbeans\rest\application\config\ApplicationConfig.class
 com\kjw28\server\entity\Project.class
+com\kjw28\server\rest\RSStudent.class
+com\kjw28\server\rest\RSProject.class
+com\kjw28\server\entity\Student.class
+com\kjw28\server\entity\Supervisor.class
+com\kjw28\server\ejb\ProjectStorageService.class
 com\kjw28\server\jsf\ProposalBean$Status.class
+com\kjw28\server\rest\RSApplication.class
 com\kjw28\server\jsf\ProjectListBean.class
+com\kjw28\server\rest\RSSupervisor.class
