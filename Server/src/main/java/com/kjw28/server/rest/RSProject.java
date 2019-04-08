@@ -1,7 +1,9 @@
 package com.kjw28.server.rest;
 
 import com.kjw28.server.ejb.ProjectStorageService;
+import com.kjw28.server.ejb.SupervisorStorageService;
 import com.kjw28.server.entity.Project;
+import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -18,25 +20,30 @@ import javax.ws.rs.core.Response;
 public class RSProject {
     @EJB
     ProjectStorageService projectStore;
+    @EJB
+    SupervisorStorageService supervisorStore;
     
     @GET
     @Path("/{proj}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProject(@PathParam("proj") String supervisorId) {
-        Long id = Long .parseLong(supervisorId);
-        Project project = projectStore.getProject(id);
-        if (project == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            return Response.ok(project.copyMock()).build();
+    public Response getProject(@PathParam("proj") String supervisorIdString) {
+        Long supervisorId = Long.parseLong(supervisorIdString);
+        Supervisor supervisor = supervisorStore.getSupervisor(supervisorId);
+        if(supervisor != null) {
+            List<Project> projects = buildMockList(supervisor.getProjects());
+            return Response.ok(projects).build();
         }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
     
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Project> getAllProjects() {
-        List<Project> originals = projectStore.getFullProjectList();
+        return buildMockList(projectStore.getFullProjectList());
+    }
+    
+    private List<Project> buildMockList(List<Project> originals) {
         List<Project> mocks = new ArrayList<>();
         for(Project p : originals)
             mocks.add(p.copyMock());
