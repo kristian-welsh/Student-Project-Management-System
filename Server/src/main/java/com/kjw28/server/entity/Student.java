@@ -2,13 +2,25 @@ package com.kjw28.server.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Transient;
+
 @Entity
+@NamedQueries({
+    @NamedQuery(name="findAllStudents",query="SELECT s FROM Student s"),
+    @NamedQuery(name="findStudentById",query="SELECT s FROM Student s WHERE s.id=:id")
+})
 public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +36,9 @@ public class Student implements Serializable {
     private String email;
     @NotNull
     private String password;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Project project;
 
     public Student() {
         // intentionally blank
@@ -35,6 +50,22 @@ public class Student implements Serializable {
         this.course = course;
         this.email = email;
         this.password = password;
+    }
+    
+    public Student(String name, String surname, String course, String email, String password, Project project) {
+        this(name, surname, course, email, password);
+        this.project = project;
+    }
+    
+    public Student copyMock() {
+        Student mock = new Student();
+        mock.setId(id);
+        mock.setName(name);
+        mock.setSurname(surname);
+        mock.setCourse(course);
+        mock.setEmail(email);
+        mock.setPassword(password);
+        return mock;
     }
     
     //<editor-fold defaultstate="collapsed" desc="getters & setters">  
@@ -85,17 +116,25 @@ public class Student implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
     //</editor-fold>
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.surname);
-        hash = 97 * hash + Objects.hashCode(this.course);
-        hash = 97 * hash + Objects.hashCode(this.email);
-        hash = 97 * hash + Objects.hashCode(this.password);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.surname);
+        hash = 37 * hash + Objects.hashCode(this.course);
+        hash = 37 * hash + Objects.hashCode(this.email);
+        hash = 37 * hash + Objects.hashCode(this.password);
         return hash;
     }
 

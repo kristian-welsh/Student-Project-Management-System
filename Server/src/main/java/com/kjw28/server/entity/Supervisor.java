@@ -55,6 +55,18 @@ public class Supervisor implements Serializable {
         projects.add(p);
     }
     
+    public Supervisor copyMock() {
+        Supervisor mock = new Supervisor();
+        mock.setId(id);
+        mock.setName(name);
+        mock.setSurname(surname);
+        mock.setDepartment(department);
+        mock.setEmail(email);
+        mock.setPhone(phone);
+        mock.setPassword(password);
+        return mock;
+    }
+    
     //<editor-fold defaultstate="collapsed" desc="getters & setters">  
     public Long getId() {
         return id;
@@ -173,5 +185,4 @@ public class Supervisor implements Serializable {
         }
         return true;
     }
-    
 }

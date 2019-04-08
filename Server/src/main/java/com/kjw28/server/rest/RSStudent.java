@@ -1,8 +1,12 @@
 package com.kjw28.server.rest;
 
+import com.kjw28.server.ejb.StudentStorageService;
+import com.kjw28.server.entity.Project;
 import com.kjw28.server.entity.Student;
+import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,32 +18,37 @@ import javax.ws.rs.core.Response;
 @Singleton
 @Path("/student")
 public class RSStudent {
-    HashMap<Integer, Student> students;
-    
-    public RSStudent() {
-        Student student = new Student("Kristian", "Welsh", "Computer Science", "kristian.welsh@sussex.ac.uk", "password");
-        students = new HashMap<>();
-        students.put(1, student);
-    }
+    @EJB
+    StudentStorageService studentStore;
     
     @GET
     @Path("/{studentId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStudent(@PathParam("studentId") String studentId) {
-        // todo: db backend
-        Student project = students.get(Integer.parseInt(studentId));
-        if (project == null) {
+        Long id = Long.parseLong(studentId);
+        Student student = studentStore.getStudent(id);
+        if (student == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } else {
-            return Response.ok(project).build();
+            return Response.ok(student.copyMock()).build();
         }
+    }
+    
+    private List<String> testSkillsList() {
+        List<String> skills = new ArrayList<>();
+        skills.add("skill-1");
+        skills.add("skill-2");
+        return skills;
     }
     
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Student> getAllStudents() {
-        // todo: db backend
-        return new ArrayList<>(students.values());
+    public List<Student> getAllStudents() {
+        List<Student> originals = studentStore.getFullStudentList();
+        List<Student> mocks = new ArrayList<>();
+        for(Student s : originals)
+            mocks.add(s.copyMock());
+        return mocks;
     }
 }

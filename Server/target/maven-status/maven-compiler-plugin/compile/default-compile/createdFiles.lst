@@ -9,8 +9,10 @@ com\kjw28\server\rest\RSProject.class
 com\kjw28\server\entity\Student.class
 com\kjw28\server\ejb\SupervisorStorageServiceBean.class
 com\kjw28\server\entity\Student_.class
+com\kjw28\server\ejb\StudentStorageService.class
 com\kjw28\server\entity\Supervisor.class
 com\kjw28\server\ejb\ProjectStorageServiceBean.class
+com\kjw28\server\ejb\StudentStorageServiceBean.class
 com\kjw28\server\ejb\ProjectStorageService.class
 com\kjw28\server\entity\TestDataInjector.class
 com\kjw28\server\entity\Project_.class

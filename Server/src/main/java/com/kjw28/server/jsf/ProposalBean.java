@@ -50,6 +50,7 @@ public class ProposalBean {
         status = "Proposed";
         // todo: stop submission if student has proposed project that hasn't
         //       been accepted yet (probably re-use current proposed)
+        // todo: get logged in student and set project on them to be the created project
         projectStore.insertProject(title, description, skills, status, supervisorIds.get(supervisor));
         return "proposal-confirmation";
     }
@@ -126,12 +127,6 @@ public class ProposalBean {
     private List<String> mockTopics() {
         ArrayList<String> list = new ArrayList<>();
         list.add("Natural Language Engineering");
-        return list;
-    }
-    
-    private List<String> mockSupervisors() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("Dr. Paul Newbury");
         return list;
     }
 }

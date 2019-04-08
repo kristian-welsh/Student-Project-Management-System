@@ -10,10 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.OneToOne;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
-@NamedQuery(name="findAllProjects",query="SELECT p FROM Project p")
+@NamedQueries({
+    @NamedQuery(name="findAllProjects",query="SELECT p FROM Project p"),
+    @NamedQuery(name="findProjectById",query="SELECT p FROM Project p WHERE p.id=:id")
+})
 @Entity
 public class Project implements Serializable {
     @Id
@@ -32,6 +37,8 @@ public class Project implements Serializable {
     @ManyToOne(cascade = ALL)
     @JoinColumn(name = "supervisorId")
     private Supervisor supervisor;
+    @OneToOne(mappedBy = "project")
+    private Student student;
 
     public Project() {
         // intentionally blank
@@ -43,6 +50,16 @@ public class Project implements Serializable {
         this.skills = skills;
         this.status = status;
         this.supervisor = supervisor;
+    }
+    
+    public Project copyMock() {
+        Project mock = new Project();
+        mock.setId(id);
+        mock.setTitle(title);
+        mock.setDescription(description);
+        mock.setSkills(skills);
+        mock.setStatus(status);
+        return mock;
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters & setters">  
@@ -93,6 +110,14 @@ public class Project implements Serializable {
     public void setSupervisor(Supervisor supervisor) {
         this.supervisor = supervisor;
     }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
     //</editor-fold>
 
     @Override
@@ -103,7 +128,6 @@ public class Project implements Serializable {
         hash = 17 * hash + Objects.hashCode(this.description);
         hash = 17 * hash + Objects.hashCode(this.skills);
         hash = 17 * hash + Objects.hashCode(this.status);
-        hash = 17 * hash + Objects.hashCode(this.supervisor);
         return hash;
     }
 
@@ -132,9 +156,6 @@ public class Project implements Serializable {
             return false;
         }
         if (!Objects.equals(this.skills, other.skills)) {
-            return false;
-        }
-        if (!Objects.equals(this.supervisor, other.supervisor)) {
             return false;
         }
         return true;

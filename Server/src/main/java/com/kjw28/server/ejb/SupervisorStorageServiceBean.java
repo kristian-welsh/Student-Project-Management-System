@@ -4,6 +4,7 @@ import com.kjw28.server.entity.Supervisor;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -18,8 +19,12 @@ public class SupervisorStorageServiceBean implements SupervisorStorageService {
     
     @Override
     public synchronized Supervisor getSupervisor(Long id) {
-        Query query = em.createNamedQuery("findSupervisorById");
-        query.setParameter("id", id);
-        return (Supervisor)query.getSingleResult();
+        try {
+            Query query = em.createNamedQuery("findSupervisorById");
+            query.setParameter("id", id);
+            return (Supervisor)query.getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
     }
 }

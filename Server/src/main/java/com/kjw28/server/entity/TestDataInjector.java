@@ -16,8 +16,9 @@ public class TestDataInjector {
     @PostConstruct
     public void store() {
         Supervisor supervisor = new Supervisor("Paul", "Newbury", "Informatics", "paul.newbury@sussex.ac.uk", "055501234", "password");
-        Student student = new Student("Kristian", "Welsh", "Computer Science", "kristian.welsh@sussex.ac.uk", "password");
         Project project = new Project("title", "description", testSkillsList(), "Available", supervisor);
+        Student student = new Student("Kristian", "Welsh", "Computer Science", "kristian.welsh@sussex.ac.uk", "password", project);
+        project.setStudent(student);
         em.persist(supervisor);
         em.persist(student);
         em.persist(project);
