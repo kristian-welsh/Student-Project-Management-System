@@ -43,7 +43,7 @@ public class Student implements Serializable {
     public Student() {
         // intentionally blank
     }
-    
+    //https://vladmihalcea.com/the-best-way-to-use-entity-inheritance-with-jpa-and-hibernate/
     public Student(String name, String surname, String course, String email, String password) {
         this.name = name;
         this.surname = surname;

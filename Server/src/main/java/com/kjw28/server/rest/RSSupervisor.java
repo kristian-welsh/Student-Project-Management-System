@@ -37,15 +37,22 @@ public class RSSupervisor {
             Project project = student.getProject();
             if(project != null)
                 return Response.ok(project.getSupervisor().copyMock()).build();
+            else
+                return Response.noContent().build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
     }
     
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Supervisor> getAllSupervisors() {
-        return buildMockList(supervisorStore.getFullSupervisorList());
+    public Response getAllSupervisors() {
+        List<Supervisor> supervisors = buildMockList(supervisorStore.getFullSupervisorList());
+        if(supervisors.size() > 0)
+            return Response.ok(supervisors).build();
+        else
+            return Response.noContent().build();
     }
     
     private List<Supervisor> buildMockList(List<Supervisor> originals) {

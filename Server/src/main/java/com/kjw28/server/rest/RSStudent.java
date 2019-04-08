@@ -32,17 +32,30 @@ public class RSStudent {
         Supervisor supervisor = supervisorStore.getSupervisor(supervisorId);
         if(supervisor != null) {
             List<Project> projects = supervisor.getProjects();
-            List<Student> mocks = buildMockList(studentsFromProjects(projects));
-            return Response.ok(mocks).build();
+            if(projects.size() > 0) {
+                List<Student> students = studentsFromProjects(projects);
+                if(students.size() > 0) {
+                    return Response.ok(buildMockList(students)).build();
+                } else {
+                    return Response.noContent().build();
+                }
+            } else {
+                return Response.noContent().build();
+            }
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
     }
     
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Student> getAllStudents() {
-        return buildMockList(studentStore.getFullStudentList());
+    public Response getAllStudents() {
+        List<Student> students = buildMockList(studentStore.getFullStudentList());
+        if(students.size() > 0)
+            return Response.ok(students).build();
+        else
+            return Response.noContent().build();
     }
     
     private List<Student> buildMockList(List<Student> originals) {

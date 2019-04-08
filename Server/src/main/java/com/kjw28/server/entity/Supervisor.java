@@ -41,7 +41,7 @@ public class Supervisor implements Serializable {
     public Supervisor() {
         // intentionally blank
     }
-    
+    //https://vladmihalcea.com/the-best-way-to-use-entity-inheritance-with-jpa-and-hibernate/
     public Supervisor(String name, String surname, String department, String email, String phone, String password) {
         this.name = name;
         this.surname = surname;
