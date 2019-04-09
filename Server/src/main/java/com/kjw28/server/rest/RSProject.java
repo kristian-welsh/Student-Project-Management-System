@@ -30,6 +30,9 @@ public class RSProject {
     public Response getProject(@PathParam("proj") String supervisorIdString) {
         Long supervisorId = Long.parseLong(supervisorIdString);
         Supervisor supervisor = supervisorStore.getSupervisor(supervisorId);
+        System.out.println(supervisorIdString);
+        System.out.println(supervisorId);
+        System.out.println(supervisor);
         if(supervisor != null) {
             List<Project> projects = supervisor.getProjects();
             if(projects.size() > 0) {
@@ -53,6 +56,8 @@ public class RSProject {
             return Response.noContent().build();
     }
     
+    // potentially include topic by building a mock topic with no back-reference
+    // that way the topic string could still be included in a sub-json element
     private List<Project> buildMockList(List<Project> originals) {
         List<Project> mocks = new ArrayList<>();
         for(Project p : originals)

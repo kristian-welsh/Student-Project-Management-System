@@ -1,6 +1,7 @@
 package com.kjw28.server.jsf;
 
 import com.kjw28.server.entity.Project;
+import com.kjw28.server.entity.ProjectTopic;
 import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
 import javax.enterprise.context.RequestScoped;
@@ -70,6 +71,7 @@ public class ProjectListBean {
         ArrayList<String> skills = new ArrayList<>();
         skills.add("test skill");
         Supervisor supervisor = new Supervisor("Paul", "Newbury", "Informatics", "paul.newbury@sussex.ac.uk", "055501234", "password");
-        return new Project("test title", "test description", skills, "test status", supervisor);
+        ProjectTopic topic = new ProjectTopic("Neural Networks");
+        return new Project("test title", "test description", skills, "test status", supervisor, topic);
     }
 }

@@ -2,6 +2,8 @@ package com.kjw28.server.jsf;
 
 import com.kjw28.server.ejb.ProjectStorageService;
 import com.kjw28.server.ejb.SupervisorStorageService;
+import com.kjw28.server.ejb.TopicStorageService;
+import com.kjw28.server.entity.ProjectTopic;
 import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,21 +25,36 @@ public class ProposalBean {
     
     // I can't use <String, Supervisor> because then i would have problems with transaction scopes.
     private HashMap<String, Long> supervisorIds;
+    private HashMap<String, Long> topicIds;
     
     @EJB
     ProjectStorageService projectStore;
     @EJB
     SupervisorStorageService supervisorStore;
+    @EJB
+    TopicStorageService topicStore;
 
     public ProposalBean() {
         supervisorIds = new HashMap<>();
+        topicIds = new HashMap<>();
     }
     
     @PostConstruct
+    public void loadData() {
+        loadSupervisors();
+        loadTopics();
+    }
+    
     public void loadSupervisors() {
         List<Supervisor> supervisors = supervisorStore.getFullSupervisorList();
         for (Supervisor s : supervisors)
             supervisorIds.put(s.getName() + " " + s.getSurname(), s.getId());
+    }
+    
+    public void loadTopics() {
+        List<ProjectTopic> topics = topicStore.getFullTopicList();
+        for (ProjectTopic t : topics)
+            topicIds.put(t.getTitle(), t.getId());
     }
 
     public ProposalBean(List<String> skills, String status) {
@@ -52,7 +69,7 @@ public class ProposalBean {
          * - get logged in student and set project on them to be the created project
          */
         status = "Proposed";
-        projectStore.insertProject(title, description, skills, status, supervisorIds.get(supervisor));
+        projectStore.insertProject(title, description, skills, status, supervisorIds.get(supervisor), topicIds.get(topic));
         return "proposal-confirmation";
     }
     
@@ -66,7 +83,6 @@ public class ProposalBean {
     }
     
     //<editor-fold defaultstate="collapsed" desc="getters & setters">
-
     public String getTitle() {
         return title;
     }
@@ -115,21 +131,12 @@ public class ProposalBean {
         this.status = status;
     }
     
-    public List<String> getTopics() {
-        return mockTopics();
-    }
-    
-    //</editor-fold>
-    
     public List<String> getSupervisors() {
         return new ArrayList<>(supervisorIds.keySet());
     }
     
-    // just for development purposes before database is setup:
-    
-    private List<String> mockTopics() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("Natural Language Engineering");
-        return list;
+    public List<String> getTopics() {
+        return new ArrayList<>(topicIds.keySet());
     }
+    //</editor-fold>
 }

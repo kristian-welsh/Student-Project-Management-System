@@ -1,6 +1,7 @@
 package com.kjw28.server.ejb;
 
 import com.kjw28.server.entity.Project;
+import com.kjw28.server.entity.ProjectTopic;
 import com.kjw28.server.entity.Supervisor;
 import java.util.List;
 import javax.ejb.EJB;
@@ -16,6 +17,8 @@ public class ProjectStorageServiceBean implements ProjectStorageService {
     
     @EJB
     SupervisorStorageService supervisorStorage;
+    @EJB
+    TopicStorageService topicStorage;
     
     @Override
     public synchronized List<Project> getFullProjectList() {
@@ -23,11 +26,13 @@ public class ProjectStorageServiceBean implements ProjectStorageService {
     }
     
     @Override
-    public synchronized void insertProject(String title, String description, List<String> skills, String status, Long supervisorId) {
+    public synchronized void insertProject(String title, String description, List<String> skills, String status, Long supervisorId, Long topicId) {
         Supervisor supervisor = supervisorStorage.getSupervisor(supervisorId);
-        Project project = new Project(title, description, skills, status, supervisor);
+        ProjectTopic topic = topicStorage.getTopic(topicId);
+        Project project = new Project(title, description, skills, status, supervisor, topic);
         supervisor.addProject(project);
         em.persist(project);
+        em.persist(topic);
         em.persist(supervisor);
     }
     

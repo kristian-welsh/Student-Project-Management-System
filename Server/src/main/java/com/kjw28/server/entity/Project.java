@@ -39,26 +39,34 @@ public class Project implements Serializable {
     private Supervisor supervisor;
     @OneToOne(mappedBy = "project")
     private Student student;
+    @NotNull
+    @ManyToOne
+    @JoinColumn
+    private ProjectTopic topic;
 
     public Project() {
         // intentionally blank
     }
 
-    public Project(String title, String description, List<String> skills, String status, Supervisor supervisor) {
+    public Project(String title, String description, List<String> skills, String status, Supervisor supervisor, ProjectTopic topic) {
         this.title = title;
         this.description = description;
         this.skills = skills;
         this.status = status;
         this.supervisor = supervisor;
+        this.topic = topic;
     }
     
     public Project copyMock() {
+        // todo: integrate topic as a string somehow
         Project mock = new Project();
         mock.setId(id);
         mock.setTitle(title);
         mock.setDescription(description);
         mock.setSkills(skills);
         mock.setStatus(status);
+        ProjectTopic mockTopic = topic.copyMock();
+        mock.setTopic(mockTopic);
         return mock;
     }
 
@@ -118,16 +126,27 @@ public class Project implements Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
+
+    public ProjectTopic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(ProjectTopic topic) {
+        this.topic = topic;
+    }
     //</editor-fold>
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.id);
-        hash = 17 * hash + Objects.hashCode(this.title);
-        hash = 17 * hash + Objects.hashCode(this.description);
-        hash = 17 * hash + Objects.hashCode(this.skills);
-        hash = 17 * hash + Objects.hashCode(this.status);
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.title);
+        hash = 79 * hash + Objects.hashCode(this.description);
+        hash = 79 * hash + Objects.hashCode(this.skills);
+        hash = 79 * hash + Objects.hashCode(this.status);
+        hash = 79 * hash + Objects.hashCode(this.supervisor);
+        hash = 79 * hash + Objects.hashCode(this.student);
+        hash = 79 * hash + Objects.hashCode(this.topic);
         return hash;
     }
 
@@ -156,6 +175,15 @@ public class Project implements Serializable {
             return false;
         }
         if (!Objects.equals(this.skills, other.skills)) {
+            return false;
+        }
+        if (!Objects.equals(this.supervisor, other.supervisor)) {
+            return false;
+        }
+        if (!Objects.equals(this.student, other.student)) {
+            return false;
+        }
+        if (!Objects.equals(this.topic, other.topic)) {
             return false;
         }
         return true;
