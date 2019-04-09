@@ -1,9 +1,13 @@
 package com.kjw28.server.jsf;
 
+import com.kjw28.server.ejb.ProjectStorageService;
 import com.kjw28.server.entity.Project;
 import com.kjw28.server.entity.ProjectTopic;
 import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -12,15 +16,22 @@ import javax.inject.Named;
 public class ProjectListBean {
     // rename me to ProjectBean since I'm using this for things other than listing
     Project selectedProject;
+    List<Project> availableProjects;
+    
+    @EJB
+    ProjectStorageService projectStore;
     
     public ProjectListBean() {
         
     }
+    
+    @PostConstruct
+    public void loadData() {
+        availableProjects = projectStore.getAvailableProjectList();
+    }
 
-    public ArrayList<Project> getAvailableProjectList() {
-        // todo: get list from ejb service backed by db
-        // all available projects
-        return createTestList();
+    public List<Project> getAvailableProjectList() {
+        return availableProjects;
     }
 
     public Project getSelectedProject() {

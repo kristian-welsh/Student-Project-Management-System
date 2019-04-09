@@ -68,7 +68,7 @@ public class ProposalBean {
          *       been accepted yet (probably re-use current proposed)
          * - get logged in student and set project on them to be the created project
          */
-        status = "Proposed";
+        status = "proposed";
         projectStore.insertProject(title, description, skills, status, supervisorIds.get(supervisor), topicIds.get(topic));
         return "proposal-confirmation";
     }
@@ -78,7 +78,7 @@ public class ProposalBean {
          * - grab currently logged in supervisor from context
          * - persist
          */
-        status = "Available";
+        status = "available";
         return "proposal-confirmation";
     }
     

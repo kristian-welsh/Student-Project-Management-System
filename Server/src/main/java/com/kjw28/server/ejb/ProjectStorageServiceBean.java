@@ -26,6 +26,11 @@ public class ProjectStorageServiceBean implements ProjectStorageService {
     }
     
     @Override
+    public synchronized List<Project> getAvailableProjectList() {
+        return em.createNamedQuery("findAvailableProjects").getResultList();
+    }
+    
+    @Override
     public synchronized void insertProject(String title, String description, List<String> skills, String status, Long supervisorId, Long topicId) {
         Supervisor supervisor = supervisorStorage.getSupervisor(supervisorId);
         ProjectTopic topic = topicStorage.getTopic(topicId);

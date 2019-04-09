@@ -17,7 +17,8 @@ import javax.validation.constraints.NotNull;
 
 @NamedQueries({
     @NamedQuery(name="findAllProjects",query="SELECT p FROM Project p"),
-    @NamedQuery(name="findProjectById",query="SELECT p FROM Project p WHERE p.id=:id")
+    @NamedQuery(name="findProjectById",query="SELECT p FROM Project p WHERE p.id=:id"),
+    @NamedQuery(name="findAvailableProjects",query="SELECT p FROM Project p WHERE p.status = 'available'")
 })
 @Entity
 public class Project implements Serializable {
@@ -32,7 +33,7 @@ public class Project implements Serializable {
     @NotNull
     private List<String> skills;
     @NotNull
-    private String status = "Available";
+    private String status = "available";
     @NotNull
     @ManyToOne(cascade = ALL)
     @JoinColumn(name = "supervisorId")
