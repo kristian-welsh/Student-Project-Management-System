@@ -5,7 +5,6 @@ import com.kjw28.server.ejb.SupervisorStorageService;
 import com.kjw28.server.entity.Supervisor;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -47,18 +46,22 @@ public class ProposalBean {
     }
     
     public String submitStudentProposal() {
+        /* todo: implement logic in an ejb:
+         * - stop submission if student has proposed project that hasn't
+         *       been accepted yet (probably re-use current proposed)
+         * - get logged in student and set project on them to be the created project
+         */
         status = "Proposed";
-        // todo: stop submission if student has proposed project that hasn't
-        //       been accepted yet (probably re-use current proposed)
-        // todo: get logged in student and set project on them to be the created project
         projectStore.insertProject(title, description, skills, status, supervisorIds.get(supervisor));
         return "proposal-confirmation";
     }
     
     public String submitSupervisorProposal() {
+        /* todo: implement logic in an ejb:
+         * - grab currently logged in supervisor from context
+         * - persist
+         */
         status = "Available";
-        // todo: grab currently logged in supervisor from context
-        // todo: persist
         return "proposal-confirmation";
     }
     
