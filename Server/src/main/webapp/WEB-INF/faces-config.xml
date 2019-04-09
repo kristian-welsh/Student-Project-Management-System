@@ -56,6 +56,10 @@
             <from-outcome>propose-project-supervisor</from-outcome>
             <to-view-id>/proposal/supervisor.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>create-topic</from-outcome>
+            <to-view-id>/topics/create-topic.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
     <!-- student project list: project info -->
@@ -113,6 +117,15 @@
         <navigation-case>
             <from-outcome>review-selections</from-outcome>
             <to-view-id>/review/list.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <!-- topic creation: successful -->
+    <navigation-rule>
+        <from-view-id>/topics/create-topic.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successful</from-outcome>
+            <to-view-id>/topics/creation-successful.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <head>
+        <title>Create Topic</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h:link value="home" outcome="home"/>
+        <h1>Propose Project</h1>
+        <p>You can propose your own project to a supervisor</p>
+        <h:form id="proposal_form">
+            <p>Topic Title: </p><h:inputText id="title"
+                         label="titleinput"
+                         required="true"
+                         requiredMessage="Title is required"
+                         title="title"
+                         value="#{newTopicBean.title}">
+            </h:inputText>
+            <br/>
+            <h:message for="title"/>
+            <br/>
+            <h:commandButton id="submit"
+                             title="submit"
+                             label="submitbutton"
+                             type="submit"
+                             value="Submit"
+                             action="#{newTopicBean.submitTopic}">
+            </h:commandButton>
+        </h:form>
+    </body>
+</html>
