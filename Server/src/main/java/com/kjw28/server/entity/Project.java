@@ -1,5 +1,6 @@
 package com.kjw28.server.entity;
 
+import com.kjw28.server.entity.dto.ProjectDTO;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +19,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name="findAllProjects",query="SELECT p FROM Project p"),
     @NamedQuery(name="findProjectById",query="SELECT p FROM Project p WHERE p.id=:id"),
-    @NamedQuery(name="findAvailableProjects",query="SELECT p FROM Project p WHERE p.status = 'available'")
+    @NamedQuery(name="findAvailableProjects",query="SELECT p FROM Project p WHERE p.status = 'available'"),
+    @NamedQuery(name="findProposedFromSupervisor",query="SELECT p FROM Project p WHERE p.supervisor.id = :supervisorId AND p.status='proposed'")
 })
 @Entity
 public class Project implements Serializable {
@@ -49,6 +51,15 @@ public class Project implements Serializable {
         // intentionally blank
     }
 
+    public Project(ProjectDTO dto, Supervisor supervisor, ProjectTopic topic) {
+        this.title = dto.title;
+        this.description = dto.description;
+        this.skills = dto.skills;
+        this.status = dto.status;
+        this.supervisor = supervisor;
+        this.topic = topic;
+    }
+
     public Project(String title, String description, List<String> skills, String status, Supervisor supervisor, ProjectTopic topic) {
         this.title = title;
         this.description = description;
@@ -58,6 +69,7 @@ public class Project implements Serializable {
         this.topic = topic;
     }
     
+    // todo: use dto instead
     public Project copyMock() {
         // todo: integrate topic as a string somehow
         Project mock = new Project();
@@ -139,15 +151,14 @@ public class Project implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.title);
-        hash = 79 * hash + Objects.hashCode(this.description);
-        hash = 79 * hash + Objects.hashCode(this.skills);
-        hash = 79 * hash + Objects.hashCode(this.status);
-        hash = 79 * hash + Objects.hashCode(this.supervisor);
-        hash = 79 * hash + Objects.hashCode(this.student);
-        hash = 79 * hash + Objects.hashCode(this.topic);
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.id);
+        hash = 43 * hash + Objects.hashCode(this.title);
+        hash = 43 * hash + Objects.hashCode(this.description);
+        hash = 43 * hash + Objects.hashCode(this.skills);
+        hash = 43 * hash + Objects.hashCode(this.status);
+        hash = 43 * hash + Objects.hashCode(this.supervisor);
+        hash = 43 * hash + Objects.hashCode(this.topic);
         return hash;
     }
 
@@ -179,9 +190,6 @@ public class Project implements Serializable {
             return false;
         }
         if (!Objects.equals(this.supervisor, other.supervisor)) {
-            return false;
-        }
-        if (!Objects.equals(this.student, other.student)) {
             return false;
         }
         if (!Objects.equals(this.topic, other.topic)) {

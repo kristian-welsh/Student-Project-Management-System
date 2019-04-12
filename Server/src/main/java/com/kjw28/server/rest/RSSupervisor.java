@@ -1,8 +1,8 @@
 package com.kjw28.server.rest;
 
-import com.kjw28.server.ejb.ProjectStorageService;
-import com.kjw28.server.ejb.StudentStorageService;
-import com.kjw28.server.ejb.SupervisorStorageService;
+import com.kjw28.server.ejb.services.ProjectStorageService;
+import com.kjw28.server.ejb.services.StudentStorageService;
+import com.kjw28.server.ejb.services.SupervisorStorageService;
 import com.kjw28.server.entity.Project;
 import com.kjw28.server.entity.Student;
 import com.kjw28.server.entity.Supervisor;

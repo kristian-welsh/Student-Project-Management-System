@@ -1,5 +1,6 @@
 package com.kjw28.server.entity;
 
+import com.kjw28.server.entity.dto.ProjectTopicDTO;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +32,10 @@ public class ProjectTopic implements Serializable {
         // intentionally blank
     }
 
+    public ProjectTopic(ProjectTopicDTO topic) {
+        this.title = topic.title;
+    }
+
     public ProjectTopic(String title) {
         this.title = title;
     }
@@ -41,6 +46,10 @@ public class ProjectTopic implements Serializable {
     
     public ProjectTopic copyMock() {
         return new ProjectTopic(title);
+    }
+    
+    public ProjectTopicDTO toDTO() {
+        return new ProjectTopicDTO(title);
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters & setters">
@@ -72,9 +81,8 @@ public class ProjectTopic implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.title);
-        hash = 89 * hash + Objects.hashCode(this.projects);
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.title);
         return hash;
     }
 
@@ -94,9 +102,6 @@ public class ProjectTopic implements Serializable {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.projects, other.projects)) {
             return false;
         }
         return true;

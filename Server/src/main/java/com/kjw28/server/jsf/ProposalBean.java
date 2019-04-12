@@ -1,10 +1,7 @@
 package com.kjw28.server.jsf;
 
-import com.kjw28.server.ejb.ProjectStorageService;
-import com.kjw28.server.ejb.SupervisorStorageService;
-import com.kjw28.server.ejb.TopicStorageService;
-import com.kjw28.server.entity.ProjectTopic;
-import com.kjw28.server.entity.Supervisor;
+import com.kjw28.server.ejb.ProposalLogic;
+import com.kjw28.server.entity.dto.ProjectDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,18 +18,12 @@ public class ProposalBean {
     private List<String> skills = new ArrayList<>();
     private String topic;
     private String supervisor;
-    private String status;
     
-    // I can't use <String, Supervisor> because then i would have problems with transaction scopes.
     private HashMap<String, Long> supervisorIds;
     private HashMap<String, Long> topicIds;
     
     @EJB
-    ProjectStorageService projectStore;
-    @EJB
-    SupervisorStorageService supervisorStore;
-    @EJB
-    TopicStorageService topicStore;
+    ProposalLogic proposalLogic;
 
     public ProposalBean() {
         supervisorIds = new HashMap<>();
@@ -41,35 +32,14 @@ public class ProposalBean {
     
     @PostConstruct
     public void loadData() {
-        loadSupervisors();
-        loadTopics();
-    }
-    
-    public void loadSupervisors() {
-        List<Supervisor> supervisors = supervisorStore.getFullSupervisorList();
-        for (Supervisor s : supervisors)
-            supervisorIds.put(s.getName() + " " + s.getSurname(), s.getId());
-    }
-    
-    public void loadTopics() {
-        List<ProjectTopic> topics = topicStore.getFullTopicList();
-        for (ProjectTopic t : topics)
-            topicIds.put(t.getTitle(), t.getId());
-    }
-
-    public ProposalBean(List<String> skills, String status) {
-        this.skills = skills;
-        this.status = status;
+        supervisorIds = proposalLogic.getSupervisorMap();
+        topicIds = proposalLogic.getTopicMap();
     }
     
     public String submitStudentProposal() {
-        /* todo: implement logic in an ejb:
-         * - stop submission if student has proposed project that hasn't
-         *       been accepted yet (probably re-use current proposed)
-         * - get logged in student and set project on them to be the created project
-         */
-        status = "proposed";
-        projectStore.insertProject(title, description, skills, status, supervisorIds.get(supervisor), topicIds.get(topic));
+        ProjectDTO project = new ProjectDTO(title, description, skills, "proposed",
+                supervisorIds.get(supervisor), topicIds.get(topic));
+        proposalLogic.submitProposal(project);
         return "proposal-confirmation";
     }
     
@@ -78,7 +48,6 @@ public class ProposalBean {
          * - grab currently logged in supervisor from context
          * - persist
          */
-        status = "available";
         return "proposal-confirmation";
     }
     
@@ -121,14 +90,6 @@ public class ProposalBean {
 
     public void setSupervisor(String supervisor) {
         this.supervisor = supervisor;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
     
     public List<String> getSupervisors() {

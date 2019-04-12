@@ -13,9 +13,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.Transient;
-
 @Entity
 @NamedQueries({
     @NamedQuery(name="findAllStudents",query="SELECT s FROM Student s"),

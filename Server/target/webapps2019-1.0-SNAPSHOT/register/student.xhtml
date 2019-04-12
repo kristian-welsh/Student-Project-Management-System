@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html">
+    <head>
+        <title>Student registration</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h:link value="back to login" outcome="login"/>
+        <h1>Register as a student</h1>
+        <h:form id="register_form">
+            Email: <h:inputText id="email"
+                         label="emailinput"
+                         required="true"
+                         requiredMessage="Email is required"
+                         title="email"
+                         value="#{registerBean.email}">
+            </h:inputText>
+            <br/>
+            <h:message for="email"/>
+            <br/>
+            
+            Password: <h:inputSecret id="password1"
+                         label="password1input"
+                         required="true"
+                         requiredMessage="Password is required"
+                         title="password"
+                         value="#{registerBean.password}">
+            </h:inputSecret>
+            <br/>
+            <h:message for="password1"/>
+            <br/>
+            
+            Repeat Password: <h:inputSecret id="password2"
+                         label="password2input"
+                         required="true"
+                         requiredMessage="Password is required twice"
+                         title="repeat password">
+            </h:inputSecret>
+            <br/>
+            <h:message for="password2"/>
+            <br/>
+            
+            Forename: <h:inputText id="name"
+                         label="nameinput"
+                         required="true"
+                         requiredMessage="Name is required"
+                         title="name"
+                         value="#{registerBean.name}">
+            </h:inputText>
+            <br/>
+            <h:message for="name"/>
+            <br/>
+            
+            Surname: <h:inputText id="surname"
+                         label="surnameinput"
+                         required="true"
+                         requiredMessage="Surname is required"
+                         title="surname"
+                         value="#{registerBean.surname}">
+            </h:inputText>
+            <br/>
+            <h:message for="surname"/>
+            <br/>
+            
+            Course: <h:inputText id="course"
+                         label="courseinput"
+                         required="true"
+                         requiredMessage="Course is required"
+                         title="course"
+                         value="#{registerBean.course}">
+            </h:inputText>
+            <br/>
+            <h:message for="course"/>
+            <br/>
+            
+            <h:commandButton id="submit"
+                             title="submit"
+                             label="submitbutton"
+                             type="submit"
+                             value="Submit"
+                             action="#{registerBean.submitStudent}">
+            </h:commandButton>
+            <h:commandButton id="reset"
+                             title="reset"
+                             label="resetbutton"
+                             type="reset"
+                             value="reset fields">
+            </h:commandButton>
+            <br/>
+            <h3>Input Errors</h3>
+            <h:messages layout="list"/>
+        </h:form>
+    </body>
+</html>

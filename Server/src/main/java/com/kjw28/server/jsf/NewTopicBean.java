@@ -1,6 +1,7 @@
 package com.kjw28.server.jsf;
 
-import com.kjw28.server.ejb.TopicStorageService;
+import com.kjw28.server.ejb.NewTopicLogic;
+import com.kjw28.server.entity.dto.ProjectTopicDTO;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -11,16 +12,14 @@ public class NewTopicBean {
     private String title = "";
     
     @EJB
-    TopicStorageService topicStore;
+    NewTopicLogic logic;
 
     public String getTitle() {
         return title;
     }
     
     public String submitTopic() {
-        // todo: check if a topic has this title already
-        // in seperate function called by a validator in page
-        topicStore.insertTopic(title);
+        logic.submitNewTopic(new ProjectTopicDTO(title));
         return "successful";
     }
     

@@ -1,88 +1,58 @@
 package com.kjw28.server.jsf;
 
-import com.kjw28.server.ejb.ProjectStorageService;
-import com.kjw28.server.entity.Project;
-import com.kjw28.server.entity.ProjectTopic;
-import com.kjw28.server.entity.Supervisor;
-import java.util.ArrayList;
+import com.kjw28.server.ejb.ProjectListLogic;
+import com.kjw28.server.entity.dto.ProjectDTO;
+import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+// todo: now that the logic is speprated, i can create seperate jsf beans for student and supervisor project lists
 @Named
 @RequestScoped
-public class ProjectListBean {
+public class ProjectListBean implements Serializable {
     // rename me to ProjectBean since I'm using this for things other than listing
-    Project selectedProject;
-    List<Project> availableProjects;
-    
     @EJB
-    ProjectStorageService projectStore;
-    
-    public ProjectListBean() {
-        
-    }
-    
-    @PostConstruct
-    public void loadData() {
-        availableProjects = projectStore.getAvailableProjectList();
+    ProjectListLogic logic;
+
+    public List<ProjectDTO> getAvailableProjectList() {
+        return logic.getAvailableProjects();
     }
 
-    public List<Project> getAvailableProjectList() {
-        return availableProjects;
-    }
-
-    public Project getSelectedProject() {
-        return selectedProject;
+    public ProjectDTO getSelectedProject() {
+        return logic.getSelectedProject();
     }
     
-    public String selectProject(Project project) {
-        selectedProject = project; // save selection across post request
+    public String selectProject(ProjectDTO project) {
+        logic.selectProject(project);
         return "project-information";
     }
     
     public String confirmSelection() {
-        // todo: change project status and notify supervisor
-        // do this, but on an ejb: selectedProject.setStatus("Proposed");
+        logic.confirmProjectSelection();
         return "selection-successful";
     }
     
-    public ArrayList<Project> getMyProjectReviewList() {
-        // todo: get list from ejb service backed by db
-        // all awaiting review projects supervised by logged in supervisor
-        return createTestList();
+    public List<ProjectDTO> getMyProjectReviewList() {
+        // todo: get supervisor ID from loged in user info
+        Long supervisorId = 1l;
+        System.out.println("list fetched");
+        return logic.getReviewList(supervisorId);
     }
     
-    public String reviewProject(Project project) {
-        selectedProject = project; // save selection across post request
+    public String reviewProject(ProjectDTO project) {
+        logic.selectProject(project);
         return "review-project";
     }
     
     public String acceptProposal() {
-        // todo: do the thing (through ejb)
+        logic.acceptSelection();
         return "review-selections";
     }
     
     public String rejectProposal() {
-        // todo: do the thing (through ejb)
+        logic.rejectSelection();
         return "review-selections";
-    }
-    
-    // just for development purposes before database is setup:
-    
-    private ArrayList<Project> createTestList() {
-        ArrayList<Project> list = new ArrayList<>();
-        list.add(createTestProject());
-        return list;
-    }
-    
-    private Project createTestProject() {
-        ArrayList<String> skills = new ArrayList<>();
-        skills.add("test skill");
-        Supervisor supervisor = new Supervisor("Paul", "Newbury", "Informatics", "paul.newbury@sussex.ac.uk", "055501234", "password");
-        ProjectTopic topic = new ProjectTopic("Neural Networks");
-        return new Project("test title", "test description", skills, "test status", supervisor, topic);
     }
 }
